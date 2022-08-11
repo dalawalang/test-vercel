@@ -5,5 +5,4 @@ app = FastAPI()
 
 @app.get('/')
 async def index(request: Request):
-    print('request ', dir(request))
-    return {'just visiting': 'nothing to see here'}
+    return {'nospace': 'nothing to see here'}
