@@ -5,6 +5,6 @@ import json
 app = FastAPI()
 
 
-@app.route('/')
+@app.get('/')
 async def index(request):
     return json({'hello': request})
