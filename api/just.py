@@ -5,8 +5,10 @@ app = FastAPI()
 
 @app.get('/')
 async def index(request: Request):
-    return {'hello': request}
+    print('request ', request)
+    return {'hello': str(request)}
 
 @app.get('/{test}')
 async def index(request: Request , test: str):
-    return {'hello': request , 'test': test}
+    print('request : ',request)
+    return {'hello': str(request) , 'test': test}
