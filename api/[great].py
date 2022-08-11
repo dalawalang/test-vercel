@@ -6,4 +6,5 @@ app = FastAPI()
 @app.get('/')
 async def index(request: Request):
     print('request ', dir(request))
-    return {'this is the message boi': str(request['path'])}
+    print('request ', request.url)
+    return {'this is the message boi': 'cannot do anything lol'}
