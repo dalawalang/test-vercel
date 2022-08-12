@@ -4,7 +4,9 @@ app = FastAPI()
 
 @app.get('/api/{process}')
 async def some_data(process):
-    return {'functionv12': process,'status': 200}
+    cached_cashflow = [process * 2]
+  
+    return {'functionv12': cached_cashflow,'status': 200}
 
 
 @app.delete('/api/{process}')
