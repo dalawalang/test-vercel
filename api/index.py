@@ -2,6 +2,10 @@ from fastapi import FastAPI , Request
 
 app = FastAPI()
 
+@app.get('/{function}')
+async def some_data(function: str):
+    return {'functionv12': function ,'status': 200}
+
 @app.get('/api/{function}')
 async def some_data(function: str):
     return {'function': function ,'status': 200}
