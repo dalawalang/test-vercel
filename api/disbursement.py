@@ -1,5 +1,4 @@
 from fastapi import FastAPI
-from enum import Enum
 from pydantic import BaseModel, validator
 from decimal import Decimal
 from typing import Optional
@@ -62,7 +61,7 @@ class Disburser(BaseModel):
 class Body(BaseModel):
     data: str
     
-@app.post('/api/monthly')
+@app.post('/api/disbursement')
 async def some_data(body: Body):
     try:   
         cached_disbursement = []
