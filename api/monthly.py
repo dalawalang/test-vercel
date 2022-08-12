@@ -93,10 +93,11 @@ def validate_month_name(month: str):
 
 
 class Body(BaseModel):
+    sheet: str
     data: str
     
 @app.post('/api/monthly')
-async def some_data(body: Body , sheet: str):
+async def some_data(body: Body):
     try:   
         monthly_values = json.loads(body.data)[3:]
         monthly_transactions = []
@@ -117,7 +118,7 @@ async def some_data(body: Body , sheet: str):
                 _,
                 *payment_per_day,
             ) = client_data
-            month , _year = validate_month_name(sheet)
+            month , _year = validate_month_name(body.sheet)
             monthly_transactions.append(
                 MonthlyTransaction(
                     alias=alias,
