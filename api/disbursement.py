@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, validator , ValidationError
 from decimal import Decimal
 from typing import Optional
 from functools import reduce
@@ -69,11 +69,14 @@ async def some_data(body: Body):
         cached_disbursement = []
         
         for row in data[2:]:
-            data = {
-                key: value
-                for key, value in zip(Disburser.schema()["properties"], row)
-            }
-            cached_disbursement.append(Disburser(**data))
+            try:
+                content = {
+                    key: value
+                    for key, value in zip(Disburser.schema()["properties"], row)
+                }
+                cached_disbursement.append(Disburser(**content))
+            except ValidationError:
+                pass
             
     except Exception as e:
         return {"error": str(e)}
