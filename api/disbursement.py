@@ -4,6 +4,7 @@ from decimal import Decimal
 from typing import Optional
 from functools import reduce
 from datetime import datetime, date as Date
+import json
 
 app = FastAPI()
 
@@ -63,9 +64,11 @@ class Body(BaseModel):
     
 @app.post('/api/disbursement')
 async def some_data(body: Body):
-    try:   
+    try:
+        data = json.loads(body.data) 
         cached_disbursement = []
-        for row in body.data[2:]:
+        
+        for row in data[2:]:
             data = {
                 key: value
                 for key, value in zip(Disburser.schema()["properties"], row)
