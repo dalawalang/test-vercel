@@ -92,34 +92,37 @@ def validate_month_name(month: str):
     return False
 
 @app.post('/api/monthly')
-async def some_data(data: str , sheet: str)-> list[MonthlyTransaction]:
-    monthly_values = json.loads(data)[3:]
-    monthly_transactions = []
-    for client_data in monthly_values:
-        (
-            _,
-            alias,
-            control_number,
-            _,
-            _,
-            _,
-            _,
-            payed,
-            _,
-            _,
-            _,
-            _,
-            _,
-            *payment_per_day,
-        ) = client_data
-        month , _year = validate_month_name(sheet)
-        monthly_transactions.append(
-            MonthlyTransaction(
-                alias=alias,
-                control_number=control_number,
-                payment_per_day=payment_per_day,
-                month=month,
-                year=int(_year),
+async def some_data(data: str , sheet: str):
+    try:   
+        monthly_values = json.loads(data)[3:]
+        monthly_transactions = []
+        for client_data in monthly_values:
+            (
+                _,
+                alias,
+                control_number,
+                _,
+                _,
+                _,
+                _,
+                payed,
+                _,
+                _,
+                _,
+                _,
+                _,
+                *payment_per_day,
+            ) = client_data
+            month , _year = validate_month_name(sheet)
+            monthly_transactions.append(
+                MonthlyTransaction(
+                    alias=alias,
+                    control_number=control_number,
+                    payment_per_day=payment_per_day,
+                    month=month,
+                    year=int(_year),
+                )
             )
-        )
-    return monthly_transactions
+        return monthly_transactions
+    except Exception as e:
+        return {"error": str(e)}
