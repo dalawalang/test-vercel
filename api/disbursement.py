@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from pydantic import BaseModel, validator , ValidationError
+from pydantic import BaseModel, validator
 from decimal import Decimal
 from typing import Optional
 from functools import reduce
@@ -77,6 +77,8 @@ async def some_data(body: Body):
                 cached_disbursement.append(Disburser(**content))
             except Exception as e:
                 pass
+            
+        return cached_disbursement
             
     except Exception as e:
         return {"error": str(e)}
