@@ -91,10 +91,14 @@ def validate_month_name(month: str):
     
     return False
 
+
+class Body(BaseModel):
+    data: str
+    
 @app.post('/api/monthly')
-async def some_data(data: str , sheet: str):
+async def some_data(body: Body , sheet: str):
     try:   
-        monthly_values = json.loads(data)[3:]
+        monthly_values = json.loads(body.data)[3:]
         monthly_transactions = []
         for client_data in monthly_values:
             (
