@@ -75,7 +75,7 @@ async def some_data(body: Body):
                     for key, value in zip(Disburser.schema()["properties"], row)
                 }
                 cached_disbursement.append(Disburser(**content))
-            except ValidationError:
+            except Exception as e:
                 pass
             
     except Exception as e:
