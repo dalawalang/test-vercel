@@ -18,6 +18,10 @@ def normalize_amount(amount: str)-> Decimal:
         return Decimal(reduced)
     return Decimal(amount)
 
+def date_parser(date_str: str):
+    format = "%A, %B %d, %Y "
+    return datetime.strptime(date_str, format).date()
+
     
 class Cashflow(BaseModel):
     date: str
@@ -60,7 +64,7 @@ async def some_data(body: Body):
                 label[key] = value
                 
             _cashflow_data = Cashflow(**label)
-            if _cashflow_data.date <= today:
+            if date_parser(_cashflow_data.date) <= today:
                 cached_cashflow.append(_cashflow_data)
 
         return cached_cashflow
