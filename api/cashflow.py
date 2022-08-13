@@ -19,7 +19,7 @@ def normalize_amount(amount: str)-> Decimal:
     return Decimal(amount)
 
 def date_parser(date_str: str):
-    format = "%A, %B %d, %Y "
+    format = "%Y-%m-%dT%H:%M:%S.%fZ"
     return datetime.strptime(date_str, format).date()
 
     
