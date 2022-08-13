@@ -74,7 +74,10 @@ async def some_data(body: Body):
                     key: value
                     for key, value in zip(Disburser.schema()["properties"], row)
                 }
-                cached_disbursement.append(Disburser(**content))
+                
+                bursement = Disburser(**content)
+                if bursement.control_no:
+                    cached_disbursement.append(bursement)
             except Exception as e:
                 pass
             
