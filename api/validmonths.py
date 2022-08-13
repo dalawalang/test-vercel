@@ -20,6 +20,15 @@ class Months(Enum):
     NOV = 'NOV'
     DEC = 'DEC'
     
+
+class ValidMonth(BaseModel):
+    month: str
+    year: int
+    sheet: str
+
+class Body(BaseModel):
+    sheetlist: list[str]
+    
 def validate_month_name(month: str):
     '''see assumptions ##valid-months-name for the valid pattern'''
     pattern = compile(r'(\w+)((?:\s)\d{2,4})?')
@@ -32,22 +41,20 @@ def validate_month_name(month: str):
         
     yyear = datetime.now().year
     if year_:
-        yyear = int( year_ )
+        if len(year_) == 2:
+            yyear = 2000 + int(year_)
+        else:
+            yyear = int( year_ )
         if yyear < 2020:
             return False
     
     if month_[:3].upper() in Months.__members__:
-        return [month_[:3].upper(), yyear ]
+        return ValidMonth(month=month_[:3].upper(), year=yyear , sheet=month)
     
     return False
-
-
-class Body(BaseModel):
-    sheetlist: list[str]
-    
     
 @app.post('/api/validmonths')
-async def some_data(body: Body):
+async def some_data(body: Body)-> list[ValidMonth]:
     '''verifies list of sheet name'''
     try:
         valid_months = []
