@@ -40,18 +40,6 @@ class Disburser(BaseModel):
     completion_offset: str
     remarks: str
 
-    @validator("released_date", pre=True)
-    def parse_date(cls, value):
-        if isinstance(value, Date):
-            return value
-        try:
-            format = "%A, %B %d, %Y "
-            parsed = datetime.strptime(value, format).date()
-            return parsed
-        except Exception as ex:
-            print(f"Error Parsing Date => {ex}")
-            return None
-
     @validator(
         "borrowed", "pf", "penalty", "gross_recv", "discountable", "net_recv", pre=True
     )
