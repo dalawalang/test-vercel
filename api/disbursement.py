@@ -25,7 +25,7 @@ class Disburser(BaseModel):
     control_no: str
     type: str
     location: str
-    released_date: Optional[Date]
+    released_date: str
     borrowed: Optional[Decimal]
     pf: Optional[Decimal]
     penalty: Optional[Decimal]
